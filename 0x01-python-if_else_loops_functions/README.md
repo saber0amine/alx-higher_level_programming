@@ -44,7 +44,7 @@
 	- Print all the letters except `q` and `e`
 	- You can only use one `print` function with string format
 	- You can only use one loop in your code
-	- You are not allowed to store characters in a variable
+	- You are not allowed0 to store characters in a variable
 	- You are not allowed to import any module
 5. [00...99](5-print_comb2.py) : Write a program that prints numbers from `0` to `99`.
 	- Numbers must be separated by `,`, followed by a space
