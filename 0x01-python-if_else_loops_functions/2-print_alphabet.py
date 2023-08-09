@@ -1,3 +1,5 @@
 #!/usr/bin/python3
-for ch in range(97, 123):
-    print("{:c}".format(ch), end='')
+"""Print the alphabet in lowercase, not followed by a new line."""
+
+for letter in range(97, 123):
+    print("{}".format(chr(letter)), end="")
