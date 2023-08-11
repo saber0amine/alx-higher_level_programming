@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-import hidden_4
+
 if __name__ == "__main__":
-    list = []
-    for i in dir(hidden_4):
-        if i[0] != '_':
-            list.append(i)
-    for i in list:
-        print(i)
+    """Print all names defined by hidden_4 module."""
+    import hidden_4
+
+    names = dir(hidden_4)
+    for name in names:
+        if name[:2] != "__":
+            print(name)
