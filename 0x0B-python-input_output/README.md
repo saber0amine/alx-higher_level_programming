@@ -1,1 +1,1 @@
-# 0x0B Python - Input/Output
+# Solutions to tasks on Python - Input/Output
