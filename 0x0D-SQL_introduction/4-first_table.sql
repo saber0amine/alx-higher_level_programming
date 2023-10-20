@@ -1,5 +1,6 @@
--- create table with id type INT and name type VARCHAR(256)
+-- Create table first_table
+-- No error appear if first_table already exist 
 CREATE TABLE IF NOT EXISTS first_table (
-  id INT,
-  name VARCHAR(256)
-  );
+    id INT,
+    name VARCHAR(256)
+);
