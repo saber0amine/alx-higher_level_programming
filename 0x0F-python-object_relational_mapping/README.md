@@ -1,1 +1,1 @@
-# 0x0F-python-object_realtional_mapping
+# 0x0F. Python - Object-relational mapping
