@@ -18,9 +18,6 @@ if __name__ == '__main__':
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    session.add(State(name='Louisiana'))
-
-    for state in session.query(State).filter(State.name == 'Louisiana'):
-        print('{}'.format(state.id))
+    session.query(State).filter(State.id == 2).update({'name': 'New Mexico'})
 
     session.commit()
