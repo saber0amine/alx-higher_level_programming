@@ -1,28 +1,21 @@
 #!/usr/bin/python3
-""" Select states with names matching arguments """
-
-
-from sys import argv
+""" search a state based on user input, safe from injection """
+import sys
 import MySQLdb
 
-if __name__ == '__main__':
-
-    db_user = argv[1]
-    db_passwd = argv[2]
-    db_name = argv[3]
-    search = '{}'.format(argv[4])
-
-    database = MySQLdb.connect(host='localhost',
-                               port=3306,
-                               user=db_user,
-                               passwd=db_passwd,
-                               db=db_name)
-
-    cursor = database.cursor()
-
-    cursor.execute('SELECT id, name FROM states\
-                   WHERE name = %s\
-                   ORDER BY states.id ASC;', (search,))
-
-    for row in cursor.fetchall():
+if __name__ == "__main__":
+    db = MySQLdb.connect(
+        host="localhost",
+        user=sys.argv[1],
+        passwd=sys.argv[2],
+        db=sys.argv[3],
+        port=3306
+    )
+    cur = db.cursor()
+    cur.execute("""
+        SELECT * FROM states
+        WHERE name = %s
+        ORDER BY id;
+        """, (sys.argv[4],))
+    for row in cur.fetchall():
         print(row)

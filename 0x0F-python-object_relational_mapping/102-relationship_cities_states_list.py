@@ -1,26 +1,19 @@
 #!/usr/bin/python3
-""" List all city objects using sqlalchemy relationship """
-
+"""list all cities with states using backref
+"""
+from sys import argv
 from relationship_state import Base, State
 from relationship_city import City
-from sqlalchemy.orm.session import sessionmaker, Session
 from sqlalchemy import create_engine
-from sys import argv
+from sqlalchemy.orm import sessionmaker
 
-
-if __name__ == '__main__':
-
-    username = argv[1]
-    password = argv[2]
-    db_name = argv[3]
-
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'
-                           .format(username, password, db_name))
-
-    Base.metadata.create_all(engine)
-
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-    for city in session.query(City).order_by(City.id):
-        print('{}: {} -> {}'.format(city.id, city.name, city.state.name))
+if __name__ == "__main__":
+    engine = create_engine(
+        "mysql://{}:{}@localhost:3306/{}".format(
+            argv[1], argv[2], argv[3]
+        )
+    )
+    session = sessionmaker(bind=engine)()
+    cities = session.query(City).order_by(City.id)
+    for c in cities:
+        print("{}: {} -> {}".format(c.id, c.name, c.state.name))

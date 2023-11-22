@@ -1,27 +1,22 @@
 #!/usr/bin/python3
-""" Select states with names matching arguments """
+""" list all cities """
+import sys
+import MySQLdb
 
-
-if __name__ == '__main__':
-    from sys import argv
-    import MySQLdb
-
-    db_user = argv[1]
-    db_passwd = argv[2]
-    db_name = argv[3]
-
-    database = MySQLdb.connect(host='localhost',
-                               port=3306,
-                               user=db_user,
-                               passwd=db_passwd,
-                               db=db_name)
-
-    cursor = database.cursor()
-
-    cursor.execute('SELECT cities.id, cities.name, states.name FROM cities\
-                   JOIN states\
-                   ON cities.state_id = states.id\
-                   ORDER BY cities.id ASC')
-
-    for row in cursor.fetchall():
+if __name__ == "__main__":
+    db = MySQLdb.connect(
+        host="localhost",
+        user=sys.argv[1],
+        passwd=sys.argv[2],
+        db=sys.argv[3],
+        port=3306
+    )
+    cur = db.cursor()
+    cur.execute("""
+        SELECT c.id, c.name, s.name
+        FROM cities AS c LEFT JOIN states AS s
+        ON c.state_id = s.id
+        ORDER BY c.id;
+        """)
+    for row in cur.fetchall():
         print(row)

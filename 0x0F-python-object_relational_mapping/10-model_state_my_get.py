@@ -1,29 +1,22 @@
 #!/usr/bin/python3
-""" List all state objects using sqlalchemy """
+"""searches a State object from the database hbtn_0e_6_usa
+"""
+from sys import argv
+from model_state import Base, State
+from sqlalchemy import create_engine, func
+from sqlalchemy.orm import sessionmaker
 
-if __name__ == '__main__':
-
-    from sys import argv
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm.session import sessionmaker, Session
-    from model_state import Base, State
-
-    username = argv[1]
-    password = argv[2]
-    db_name = argv[3]
-    search = argv[4]
-    found = 0
-
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'
-                           .format(username, password, db_name))
-
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-    for state in session.query(State).\
-            filter(State.name == search).order_by(State.id):
-        if state:
-            print('{}'.format(state.id))
-            found = 1
-    if not found:
-        print('Not found')
+if __name__ == "__main__":
+    engine = create_engine(
+        "mysql://{}:{}@localhost:3306/{}".format(
+            argv[1], argv[2], argv[3]
+        )
+    )
+    session = sessionmaker(bind=engine)()
+    result = session.query(State).order_by(State.id).filter(
+                State.name == func.binary(argv[4])
+            ).first()
+    if result:
+        print("{}".format(result.id))
+    else:
+        print("Not found")

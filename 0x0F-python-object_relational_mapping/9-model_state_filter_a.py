@@ -1,23 +1,22 @@
 #!/usr/bin/python3
-""" List all state objects using sqlalchemy """
+"""lists all State objects from the database hbtn_0e_6_usa
+    whose name contains lowercase a
+"""
+from sys import argv
+from model_state import Base, State
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
-if __name__ == '__main__':
-
-    from sys import argv
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm.session import sessionmaker, Session
-    from model_state import Base, State
-
-    username = '{}'.format(argv[1])
-    password = '{}'.format(argv[2])
-    db_name = '{}'.format(argv[3])
-
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'
-                           .format(username, password, db_name))
-
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-    for state in session.query(State).order_by(State.id):
-        if 'a' in state.name:
-            print('{}: {}'.format(state.id, state.name))
+if __name__ == "__main__":
+    engine = create_engine(
+        "mysql://{}:{}@localhost:3306/{}".format(
+            argv[1], argv[2], argv[3]
+        )
+    )
+    session = sessionmaker(bind=engine)()
+    for _id, _name in session.query(
+                State.id, State.name
+            ).order_by(State.id).filter(
+                State.name.contains('a')
+            ):
+        print("{}: {}".format(_id, _name))
