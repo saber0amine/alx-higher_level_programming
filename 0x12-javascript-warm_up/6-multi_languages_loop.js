@@ -1,7 +1,6 @@
 #!/usr/bin/node
+const myVar = ['C is fun', 'Python is cool', 'JavaScript is amazing'];
 
-const first = ['C is fun', 'Python is cool', 'Javascript is amazing'];
-
-for (const f in first) {
-  console.log(first[f]);
-}
+myVar.forEach((element) => {
+  console.log(element);
+});
