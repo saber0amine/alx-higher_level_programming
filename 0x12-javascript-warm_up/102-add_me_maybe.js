@@ -1,7 +1,2 @@
 #!/usr/bin/node
-
-module.exports = {
-  addMeMaybe: function (num, func) {
-    func(++num);
-  }
-};
+module.exports.addMeMaybe = (n, func) => func(n + 1);

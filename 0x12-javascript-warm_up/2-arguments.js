@@ -1,15 +1,11 @@
 #!/usr/bin/node
-
-const first = 'No argument';
-const second = 'Argument found';
-const third = 'Arguments found';
-
-const numOfArgs = process.argv.length;
-
-if (numOfArgs < 3) {
-  console.log(first);
-} else if (numOfArgs < 4) {
-  console.log(second);
-} else {
-  console.log(third);
+switch (process.argv.length) {
+  case 2:
+    console.log('No argument');
+    break;
+  case 3:
+    console.log('Argument found');
+    break;
+  default:
+    console.log('Arguments found');
 }

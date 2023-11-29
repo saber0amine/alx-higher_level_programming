@@ -1,1 +1,1 @@
-# Javascript warmups project
+JavaScript Basic
