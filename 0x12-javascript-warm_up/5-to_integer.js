@@ -1,3 +1,11 @@
 #!/usr/bin/node
-let num = parseInt(process.argv[2]);
-console.log(num ? 'My number: ' + num : 'Not a number');
+// Handle arguments with Javascript
+
+let parsed = parseInt(process.argv[2]);
+
+if (parsed) {
+  parsed = 'My number: ' + parsed;
+  console.log(parsed);
+} else {
+  console.log('Not a number');
+}

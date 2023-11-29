@@ -1,3 +1,12 @@
 #!/usr/bin/node
-const lines = ['C is fun', 'Python is cool', 'Javascript is amazing'];
-for (let ln in lines) console.log(lines[ln]);
+// Basic print with Javascript
+
+const array = ['C is fun',
+  'Python is cool',
+  'Javascript is amazing'];
+let i = 0;
+
+while (array[i]) {
+  console.log(array[i]);
+  i++;
+}

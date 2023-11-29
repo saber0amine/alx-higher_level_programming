@@ -1,4 +1,11 @@
 #!/usr/bin/node
-(function add (a, b) {
+// Basic addition with Javascript
+
+const a = parseInt(process.argv[2]);
+const b = parseInt(process.argv[3]);
+
+function add (a, b) {
   console.log(a + b);
-})(parseInt(process.argv[2]), parseInt(process.argv[3]));
+}
+
+add(a, b);
