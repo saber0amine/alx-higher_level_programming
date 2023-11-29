@@ -1,10 +1,5 @@
 #!/usr/bin/node
-// Handle arguments with Javascript
 
-const arg = process.argv[2];
+const first = 'No argument';
 
-if (arg) {
-  console.log(arg);
-} else {
-  console.log('No argument');
-}
+console.log(process.argv[2] || first);

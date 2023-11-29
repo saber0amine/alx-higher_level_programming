@@ -1,14 +1,11 @@
 #!/usr/bin/node
-// Basic print with Javascript
 
-const fun = 'C is fun';
+const num = process.argv[2];
 
-if (process.argv.length >= 3) {
-  let i = process.argv[2];
-  while (i > 0) {
-    console.log(fun);
-    i--;
-  }
-} else {
+if (isNaN(parseInt(+num))) {
   console.log('Missing number of occurrences');
+} else {
+  for (let i = 0; i < parseInt(+num); i++) {
+    console.log('C is fun');
+  }
 }

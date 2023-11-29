@@ -1,4 +1,9 @@
 #!/usr/bin/node
-exports.callMeMoby = function (x, func) {
-  for (;x > 0; x--) { func(); }
+
+module.exports = {
+  callMeMoby: function (num, func) {
+    for (let i = 0; i < num; i++) {
+      func();
+    }
+  }
 };

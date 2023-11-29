@@ -1,11 +1,14 @@
 #!/usr/bin/node
-// Basic addition with Javascript
 
-const a = parseInt(process.argv[2]);
-const b = parseInt(process.argv[3]);
+const first = parseInt(+process.argv[2]);
+const second = parseInt(+process.argv[3]);
 
 function add (a, b) {
-  console.log(a + b);
+  return a + b;
 }
 
-add(a, b);
+if (isNaN(first) || isNaN(second)) {
+  console.log('NaN');
+} else {
+  console.log(add(first, second));
+}
