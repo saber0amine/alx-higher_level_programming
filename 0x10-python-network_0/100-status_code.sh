@@ -1,3 +1,3 @@
 #!/bin/bash
-# send a request and only show the status code
-curl -s -o /dev/null -I --w "%{http_code}" "$1"
+# get status code
+curl  -sI -o /dev/null -w '%{http_code}' "$1"
