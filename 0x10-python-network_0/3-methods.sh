@@ -1,3 +1,3 @@
 #!/bin/bash
-# get all allowed methods
-curl -sI $1 | grep 'Allow: ' | sed 's/^.*: //'
+# Display HTTP methods
+curl -sI "$1" | grep "Allow:" | cut -d ':' -f 2- | cut -c 2-

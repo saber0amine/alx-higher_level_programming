@@ -1,3 +1,3 @@
 #!/bin/bash
-# get content length from return header
-curl -sI $1 | grep -i Content-length| awk '{print $2}'
+# Make request and display response
+curl -sI "$1" | grep "Content-Length" | cut -d ' ' -f 2

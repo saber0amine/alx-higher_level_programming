@@ -1,3 +1,3 @@
 #!/bin/bash
-# send GET request with customized header
-curl -s -X GET --header "X-HolbertonSchool-User-Id: 98" "$1"
+# Display response body
+curl -s "$1" -X GET -H "X-HolbertonSchool-User-Id: 98"

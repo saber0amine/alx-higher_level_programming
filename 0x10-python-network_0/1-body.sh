@@ -1,3 +1,3 @@
 #!/bin/bash
-# get response body
-curl -sL -X GET $1
+# Make request, display response
+curl -sL "$1"

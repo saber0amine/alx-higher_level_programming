@@ -1,3 +1,3 @@
 #!/bin/bash
-# send json file
-curl -X PUT -d "user_id=98" --header "Origin: HolbertonSchool" -sL 0:5000/catch_me
+# Write a script to solicit "You got me!"
+curl -sLX PUT "0.0.0.0:5000/catch_me" -d "user_id=98" -H "Origin: HolbertonSchool"
