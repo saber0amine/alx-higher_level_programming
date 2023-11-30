@@ -1,3 +1,3 @@
 #!/bin/bash
-# sends a GET request with header variable being 'X-School-User-Id' with variable 98
-curl -sH "X-School-User-Id: 98" "$1"
+# Bash script that takes in a URL as an argument
+curl "$1" -sX GET -H "X-HolbertonSchool-User-Id:98"
