@@ -1,3 +1,3 @@
 #!/bin/bash
-# One line no pipe, redirection, ; or &&
-curl -so /dev/null -Iw "%{http_code}" $@
+# sends a request to a URL, and displays only the status code of the response.
+curl -s -o /dev/null -w "%{http_code}" "$1"

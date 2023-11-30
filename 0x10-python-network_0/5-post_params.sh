@@ -1,3 +1,3 @@
 #!/bin/bash
-# Send GET request to URL and siplays the content of the response
-curl -sd "email=hr@holbertonschool.com" -d "subject=I will always be here for PLD" $@
+# send a POST request to the passed URL using curl, and display the body of the response
+curl -s -X POST -d "email=test@gmail.com&subject=I will always be here for PLD" "$1"
