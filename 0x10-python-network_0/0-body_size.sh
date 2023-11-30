@@ -1,3 +1,3 @@
 #!/bin/bash
-# Make request and display response
-curl -sI "$1" | grep "Content-Length" | cut -d ' ' -f 2
+# takes in URL, sends a request, displays size of the body of response
+curl -sI "$@" | grep -i Content-Length | awk '{print $2}'

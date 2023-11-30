@@ -1,3 +1,3 @@
 #!/bin/bash
-# Display response status code
-curl -o /dev/null -sw "%{http_code}" "$1"
+# One line no pipe, redirection, ; or &&
+curl -so /dev/null -Iw "%{http_code}" $@

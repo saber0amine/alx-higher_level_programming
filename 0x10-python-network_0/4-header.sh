@@ -1,3 +1,3 @@
 #!/bin/bash
-# Display response body
-curl -s "$1" -X GET -H "X-HolbertonSchool-User-Id: 98"
+# Send GET request to URL and siplays the content of the response
+curl -sH "X-HolbertonSchool-User-Id: 98" $@
