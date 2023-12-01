@@ -1,30 +1,23 @@
 #!/usr/bin/python3
-"""states models
-"""
-if __name__ == "__main__":
-    import MySQLdb
-    import sys
+"""lists all cities based on a name"""
+import MySQLdb
+import sys
 
-    db_host = "localhost"
-    db_user = sys.argv[1]  # "your_username"
-    db_password = sys.argv[2]  # "your_password"
-    db_name = sys.argv[3]  # "your_database_name"
-    port = 3306
-    state_name = sys.argv[4]  # "your_database_name"
-    query = "SELECT name FROM cities WHERE state_id = \
-(SELECT id FROM states WHERE name LIKE BINARY %s) ORDER BY cities.id ASC"
-    params = (state_name,)
-    db = MySQLdb.connect(
-        host=db_host, user=db_user, passwd=db_password, db=db_name, port=port
+if __name__ == '__main__':
+    conn = MySQLdb.connect(
+        host="localhost",
+        user=sys.argv[1],
+        passwd=sys.argv[2],
+        db=sys.argv[3],
+        port=3306
     )
-    cursor = db.cursor()
-
-    cursor.execute(query, params)
-    rows = cursor.fetchall()
-    tuples = ()
-    for row in rows:
-        tuples += row
-    print(*tuples, sep=", ")
-
-    cursor.close()
-    db.close()
+    cur = conn.cursor()
+    query = "SELECT cities.name FROM cities \
+    INNER JOIN states ON states.id=cities.state_id \
+    WHERE states.name=%s"
+    cur.execute(query, (sys.argv[4],))
+    rows = cur.fetchall()
+    tmp = list(map(lambda row: row[0], rows))
+    print(*tmp, sep=", ")
+    cur.close()
+    conn.close()

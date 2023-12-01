@@ -1,17 +1,19 @@
 #!/usr/bin/python3
-"""model state
-"""
-from sqlalchemy import Column, Integer, String
+"""Contains State class and Base"""
+
+from sqlalchemy import MetaData, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
-Base = declarative_base()
+mt_data = MetaData()
+Base = declarative_base(metadata=mt_data)
 
 
 class State(Base):
-    """ class class """
+    """
+    Class that defines State
+    """
     __tablename__ = 'states'
-
-    id = Column(Integer, primary_key=True, nullable=False)
+    id = Column(Integer, unique=True, nullable=False, primary_key=True)
     name = Column(String(128), nullable=False)
-    cities = relationship('City', cascade="all, delete", backref='state')
+    cities = relationship("City", backref="states")

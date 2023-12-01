@@ -1,24 +1,22 @@
 #!/usr/bin/python3
-"""Start link class to table in database
-"""
-import sys
+"""changes the name of a State object from the database"""
+
 from model_state import Base, State
+from sqlalchemy import (create_engine)
+from sqlalchemy import update
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine, select, insert
+import sys
+
 
 if __name__ == "__main__":
+    usrname = sys.argv[1]
+    passwd = sys.argv[2]
+    db_name = sys.argv[3]
     engine = create_engine(
-        "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
-            sys.argv[1], sys.argv[2], sys.argv[3]
-        ),
-        pool_pre_ping=True,
-    )
-
+        'mysql+mysqldb://{}:{}@localhost:\
+        3306/{}'.format(usrname, passwd, db_name))
+    Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
-    session = Session()
-    updateState = session.query(State).filter_by(id=2).first()
-
-    if updateState:
-        updateState.name = 'New Mexico'
+    with Session() as session:
+        session.query(State).filter_by(id=2).update({'name': 'New Mexico'})
         session.commit()
-    session.close()

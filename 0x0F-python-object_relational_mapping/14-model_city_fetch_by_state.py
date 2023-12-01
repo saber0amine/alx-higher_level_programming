@@ -1,24 +1,26 @@
 #!/usr/bin/python3
-"""model state
-"""
-from sqlalchemy import create_engine
+"""prints all City objects from the database hbtn_0e_14_usa"""
+
 from model_state import Base, State
-from model_city import City
+from sqlalchemy import (create_engine)
 from sqlalchemy.orm import sessionmaker
+from model_city import City
 import sys
 
+
 if __name__ == "__main__":
+    usrname = sys.argv[1]
+    passwd = sys.argv[2]
+    db_name = sys.argv[3]
     engine = create_engine(
-        "mysql+mysqldb://{}:{}@localhost/{}".format(
-            sys.argv[1], sys.argv[2], sys.argv[3]
-        ),
-        pool_pre_ping=True,
-    )
+        'mysql+mysqldb://{}:{}@localhost:\
+        3306/{}'.format(usrname, passwd, db_name))
+    Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
-    result = session.query(City, State).\
-        join(State, State.id == City.state_id).all()
-    if result:
-        for city, state in result:
-            print(f"{state.name}: ({city.id}) {city.name}")
-    session.close()
+    for instance in (session.query(
+        State.name,
+        City.id,
+        City.name
+    ).filter(State.id == City.state_id)):
+        print(f"{instance[0]}: ({str(instance[1])}) {instance[2]}")

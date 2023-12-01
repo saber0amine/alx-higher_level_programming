@@ -1,27 +1,23 @@
 #!/usr/bin/python3
-"""states models
-"""
-if __name__ == "__main__":
-    import MySQLdb
-    import sys
+"""lists all states with a name"""
 
-    db_host = "localhost"
-    db_user = sys.argv[1]  # "your_username"
-    db_password = sys.argv[2]  # "your_password"
-    db_name = sys.argv[3]  # "your_database_name"
-    port = 3306
+import MySQLdb
+import sys
 
-    db = MySQLdb.connect(
-        host=db_host, user=db_user, passwd=db_password, db=db_name, port=port
+if __name__ == '__main__':
+    conn = MySQLdb.connect(
+        host="localhost",
+        user=sys.argv[1],
+        passwd=sys.argv[2],
+        db=sys.argv[3],
+        port=3306
     )
-    cursor = db.cursor()
-
-    cursor.execute("SELECT * FROM states WHERE name \
-LIKE BINARY 'N%' ORDER BY id ASC")
-    rows = cursor.fetchall()
-
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT * FROM states WHERE name LIKE BINARY 'N%' ORDER BY states.id"
+    )
+    rows = cur.fetchall()
     for row in rows:
         print(row)
-
-    cursor.close()
-    db.close()
+    cur.close()
+    conn.close()
