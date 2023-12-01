@@ -1,26 +1,25 @@
 #!/usr/bin/python3
-""" List all state objects using sqlalchemy """
+"""Start link class to table in database
+"""
+import sys
+from model_state import Base, State
+from sqlalchemy import create_engine, select, insert
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    engine = create_engine(
+        "mysql+mysqldb://{}:{}@localhost:3306/{}".format(
+            sys.argv[1], sys.argv[2], sys.argv[3]
+        ),
+        pool_pre_ping=True,
+    )
+    with engine.connect() as connection:
+        transaction = connection.begin()
+        query = insert(State).values(name="Louisiana")
+        connection.execute(query)
+        query = select(State).where(State.name == "Louisiana")
+        state = connection.execute(query).fetchone()
+        if state:
+            print(state.id)
+        transaction.commit()
 
-    from sys import argv
-    from sqlalchemy import create_engine
-    from sqlalchemy.orm.session import sessionmaker, Session
-    from model_state import Base, State
-
-    username = '{}'.format(argv[1])
-    password = '{}'.format(argv[2])
-    db_name = '{}'.format(argv[3])
-
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'
-                           .format(username, password, db_name))
-
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
-    session.add(State(name='Louisiana'))
-
-    for state in session.query(State).filter(State.name == 'Louisiana'):
-        print('{}'.format(state.id))
-
-    session.commit()
+    engine.dispose()

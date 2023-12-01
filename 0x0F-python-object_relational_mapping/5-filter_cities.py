@@ -1,29 +1,30 @@
 #!/usr/bin/python3
-""" Select states with names matching arguments """
+"""states models
+"""
+if __name__ == "__main__":
+    import MySQLdb
+    import sys
 
+    db_host = "localhost"
+    db_user = sys.argv[1]  # "your_username"
+    db_password = sys.argv[2]  # "your_password"
+    db_name = sys.argv[3]  # "your_database_name"
+    port = 3306
+    state_name = sys.argv[4]  # "your_database_name"
+    query = "SELECT name FROM cities WHERE state_id = \
+(SELECT id FROM states WHERE name LIKE BINARY %s) ORDER BY cities.id ASC"
+    params = (state_name,)
+    db = MySQLdb.connect(
+        host=db_host, user=db_user, passwd=db_password, db=db_name, port=port
+    )
+    cursor = db.cursor()
 
-from sys import argv
-import MySQLdb
+    cursor.execute(query, params)
+    rows = cursor.fetchall()
+    tuples = ()
+    for row in rows:
+        tuples += row
+    print(*tuples, sep=", ")
 
-if __name__ == '__main__':
-
-    db_user = argv[1]
-    db_passwd = argv[2]
-    db_name = argv[3]
-    user_state = argv[4]
-
-    database = MySQLdb.connect(host='localhost',
-                               port=3306,
-                               user=db_user,
-                               passwd=db_passwd,
-                               db=db_name)
-
-    cursor = database.cursor()
-
-    cursor.execute('SELECT cities.name FROM cities\
-                   JOIN states\
-                   ON cities.state_id = states.id\
-                   WHERE states.name = %s\
-                   ORDER BY states.id ASC', (user_state,))
-    result = []
-    print(', '.join([value[0] for value in cursor.fetchall()]))
+    cursor.close()
+    db.close()

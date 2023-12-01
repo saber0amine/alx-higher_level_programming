@@ -1,27 +1,28 @@
 #!/usr/bin/python3
-""" Select states with names matching arguments """
-
-
-if __name__ == '__main__':
-    from sys import argv
+"""states models
+"""
+if __name__ == "__main__":
     import MySQLdb
+    import sys
 
-    db_user = argv[1]
-    db_passwd = argv[2]
-    db_name = argv[3]
+    db_host = "localhost"
+    db_user = sys.argv[1]
+    db_password = sys.argv[2]
+    db_name = sys.argv[3]
+    port = 3306
 
-    database = MySQLdb.connect(host='localhost',
-                               port=3306,
-                               user=db_user,
-                               passwd=db_passwd,
-                               db=db_name)
+    db = MySQLdb.connect(
+        host=db_host, user=db_user, passwd=db_password, db=db_name, port=port
+    )
+    cursor = db.cursor()
 
-    cursor = database.cursor()
+    cursor.execute("SELECT cities.id, cities.name, states.name FROM cities \
+    JOIN states ON states.id = cities.state_id \
+    ORDER BY cities.id")
+    rows = cursor.fetchall()
 
-    cursor.execute('SELECT cities.id, cities.name, states.name FROM cities\
-                   JOIN states\
-                   ON cities.state_id = states.id\
-                   ORDER BY cities.id ASC')
-
-    for row in cursor.fetchall():
+    for row in rows:
         print(row)
+
+    cursor.close()
+    db.close()

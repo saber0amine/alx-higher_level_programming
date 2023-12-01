@@ -1,20 +1,17 @@
 #!/usr/bin/python3
-""" Define State model """
+"""model state
+"""
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
 
 class State(Base):
-    """ Define a class State to be linked to db table """
+    """ class class """
     __tablename__ = 'states'
 
-    id = Column(Integer, nullable=False,
-                autoincrement=True, unique=True,
-                primary_key=True)
-
+    id = Column(Integer, primary_key=True, nullable=False)
     name = Column(String(128), nullable=False)
-
-    cities = relationship('City', cascade='all, delete', backref='state')
+    cities = relationship('City', cascade="all, delete", backref='state')

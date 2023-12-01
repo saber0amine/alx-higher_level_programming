@@ -1,25 +1,26 @@
 #!/usr/bin/python3
-""" List all state in database """
+"""states models
+"""
+if __name__ == "__main__":
+    import MySQLdb
+    import sys
 
+    db_host = "localhost"
+    db_user = sys.argv[1]  # "your_username"
+    db_password = sys.argv[2]  # "your_password"
+    db_name = sys.argv[3]  # "your_database_name"
+    port = 3306
 
-from sys import argv
-import MySQLdb
+    db = MySQLdb.connect(
+        host=db_host, user=db_user, passwd=db_password, db=db_name, port=port
+    )
+    cursor = db.cursor()
 
-if __name__ == '__main__':
+    cursor.execute("SELECT * FROM states ORDER BY id ASC")
+    rows = cursor.fetchall()
 
-    db_user = argv[1]
-    db_passwd = argv[2]
-    db_name = argv[3]
-
-    database = MySQLdb.connect(host='localhost',
-                               port=3306,
-                               user=db_user,
-                               passwd=db_passwd,
-                               db=db_name)
-
-    cursor = database.cursor()
-
-    cursor.execute('SELECT id, name FROM states ORDER BY states.id ASC')
-
-    for row in cursor.fetchall():
+    for row in rows:
         print(row)
+
+    cursor.close()
+    db.close()
